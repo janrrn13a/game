@@ -1,3 +1,12 @@
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    controller.moveSprite(mySprite)
+})
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    controller.moveSprite(mySprite)
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    controller.moveSprite(mySprite)
+})
 let mySprite: Sprite = null
 effects.starField.startScreenEffect(2000)
 scene.setBackgroundImage(img`
@@ -160,14 +169,22 @@ game.setDialogFrame(img`
     . . . . . . . . . . . . . . . 
     `)
 game.showLongText("Welcome to star escapes", DialogLayout.Left)
-for (let index = 0; index < 4; index++) {
+for (let index = 0; index < 2; index++) {
     music.playMelody("G E B G B F A E ", 120)
 }
-controller.player1.moveSprite(mySprite, 100, 100)
 game.setDialogFrame(assets.image`dia background`)
 game.showLongText("Catch the stars to escape the dungeon. ", DialogLayout.Center)
 game.showLongText("Watch out for the monsters they can take away your lives if you get hit. ", DialogLayout.Center)
 game.onUpdate(function () {
+    scene.setBackgroundImage(assets.image`dia background`)
+    game.showLongText("You start with 4 lives", DialogLayout.Center)
+    game.showLongText("To jump press A", DialogLayout.Bottom)
+    game.showLongText("To move left press the left button", DialogLayout.Bottom)
+    game.showLongText("To move right press the right button", DialogLayout.Bottom)
+    info.setLife(4)
+})
+game.onUpdate(function () {
     scene.setBackgroundImage(assets.image`Background 1`)
-    mySprite.setPosition(76, 84)
+    controller.moveSprite(mySprite, controller.dx(100), controller.dy(100))
+    controller.moveSprite(mySprite, 0, 0)
 })

@@ -1,3 +1,15 @@
+def on_a_pressed():
+    controller.move_sprite(mySprite)
+controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
+
+def on_left_pressed():
+    controller.move_sprite(mySprite)
+controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
+
+def on_right_pressed():
+    controller.move_sprite(mySprite)
+controller.right.on_event(ControllerButtonEvent.PRESSED, on_right_pressed)
+
 mySprite: Sprite = None
 effects.star_field.start_screen_effect(2000)
 scene.set_background_image(img("""
@@ -122,28 +134,7 @@ scene.set_background_image(img("""
         8888888888855555558888888888888888888888888888855855888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888558885588885888888
         8888888888885555588888888888885888888888888888858885888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888588888588855588888
 """))
-game.set_dialog_frame(img("""
-    . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . .
-"""))
-for index in range(2):
-    music.play_melody("G E B G B F A E ", 120)
-game.show_long_text("Welcome to star escapes", DialogLayout.LEFT)
-for index2 in range(2):
-    music.play_melody("G E B G B F A E ", 120)
+while False:
     mySprite = sprites.create(img("""
             . . . . . . . . . . . . . . 
                     . . . . . f f f f . . . . . 
@@ -163,4 +154,49 @@ for index2 in range(2):
                     . . . . c b b c c c . . . .
         """),
         SpriteKind.player)
-    mySprite.set_position(76, 84)
+game.set_dialog_frame(img("""
+    . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . .
+"""))
+game.show_long_text("Welcome to star escapes", DialogLayout.LEFT)
+for index in range(2):
+    music.play_melody("G E B G B F A E ", 120)
+game.set_dialog_frame(assets.image("""
+    dia background
+"""))
+game.show_long_text("Catch the stars to escape the dungeon. ",
+    DialogLayout.CENTER)
+game.show_long_text("Watch out for the monsters they can take away your lives if you get hit. ",
+    DialogLayout.CENTER)
+
+def on_on_update():
+    scene.set_background_image(assets.image("""
+        dia background
+    """))
+    game.show_long_text("You start with 4 lives", DialogLayout.CENTER)
+    game.show_long_text("To jump press A", DialogLayout.BOTTOM)
+    game.show_long_text("To move left press the left button", DialogLayout.BOTTOM)
+    game.show_long_text("To move right press the right button", DialogLayout.BOTTOM)
+    info.set_life(4)
+game.on_update(on_on_update)
+
+def on_on_update2():
+    scene.set_background_image(assets.image("""
+        Background 1
+    """))
+    controller.move_sprite(mySprite, controller.dx(100), controller.dy(100))
+    controller.move_sprite(mySprite, 0, 0)
+game.on_update(on_on_update2)
