@@ -1,11 +1,19 @@
+function instructions () {
+    scene.setBackgroundImage(assets.image`dia background`)
+    game.showLongText("You start with 4 lives", DialogLayout.Center)
+    game.showLongText("To jump press A", DialogLayout.Bottom)
+    game.showLongText("To move left press the left button", DialogLayout.Bottom)
+    game.showLongText("To move right press the right button", DialogLayout.Bottom)
+    info.setLife(4)
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    controller.moveSprite(mySprite)
+    controller.moveSprite(mySprite, 0, controller.dy())
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    controller.moveSprite(mySprite)
+    controller.moveSprite(mySprite, controller.dx(), 0)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    controller.moveSprite(mySprite)
+    controller.moveSprite(mySprite, controller.dx(), 0)
 })
 let mySprite: Sprite = null
 effects.starField.startScreenEffect(2000)
@@ -131,26 +139,6 @@ scene.setBackgroundImage(img`
     8888888888855555558888888888888888888888888888855855888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888558885588885888888
     8888888888885555588888888888885888888888888888858885888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888588888588855588888
     `)
-while (false) {
-    mySprite = sprites.create(img`
-        . . . . . . . . . . . . . . 
-        . . . . . f f f f . . . . . 
-        . . . f f 5 5 5 5 f f . . . 
-        . . f 5 5 5 5 5 5 5 5 f . . 
-        . f 5 5 5 5 5 5 5 5 5 5 f . 
-        c b 5 5 5 d b b d 5 5 5 b c 
-        f 5 5 5 b 4 4 4 4 b 5 5 5 f 
-        f 5 5 c c 4 4 4 4 c c 5 5 f 
-        f b b f b f 4 4 f b f b b f 
-        f b b e 1 f d d f 1 e b b f 
-        c f b f d d d d d 4 4 b f c 
-        . c e c 6 9 9 9 4 d d d c . 
-        . e 4 c 9 9 9 9 4 d d 4 c . 
-        . e c b b 3 b b b e e c . . 
-        . . c c 3 3 b 3 b 3 c c . . 
-        . . . . c b b c c c . . . . 
-        `, SpriteKind.Player)
-}
 game.setDialogFrame(img`
     . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . 
@@ -168,23 +156,38 @@ game.setDialogFrame(img`
     . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . 
     `)
-game.showLongText("Welcome to star escapes", DialogLayout.Left)
-for (let index = 0; index < 2; index++) {
-    music.playMelody("G E B G B F A E ", 120)
-}
+game.showLongText("Welcome to star escapes", DialogLayout.Center)
+music.playMelody("G E B G B F A E ", 120)
 game.setDialogFrame(assets.image`dia background`)
 game.showLongText("Catch the stars to escape the dungeon. ", DialogLayout.Center)
 game.showLongText("Watch out for the monsters they can take away your lives if you get hit. ", DialogLayout.Center)
-game.onUpdate(function () {
-    scene.setBackgroundImage(assets.image`dia background`)
-    game.showLongText("You start with 4 lives", DialogLayout.Center)
-    game.showLongText("To jump press A", DialogLayout.Bottom)
-    game.showLongText("To move left press the left button", DialogLayout.Bottom)
-    game.showLongText("To move right press the right button", DialogLayout.Bottom)
-    info.setLife(4)
-})
+info.setLife(4)
+mySprite = sprites.create(img`
+    . . . . . . . . . . . . . . 
+    . . . . . f f f f . . . . . 
+    . . . f f 5 5 5 5 f f . . . 
+    . . f 5 5 5 5 5 5 5 5 f . . 
+    . f 5 5 5 5 5 5 5 5 5 5 f . 
+    c b 5 5 5 d b b d 5 5 5 b c 
+    f 5 5 5 b 4 4 4 4 b 5 5 5 f 
+    f 5 5 c c 4 4 4 4 c c 5 5 f 
+    f b b f b f 4 4 f b f b b f 
+    f b b e 1 f d d f 1 e b b f 
+    c f b f d d d d d 4 4 b f c 
+    . c e c 6 9 9 9 4 d d d c . 
+    . e 4 c 9 9 9 9 4 d d 4 c . 
+    . e c b b 3 b b b e e c . . 
+    . . c c 3 3 b 3 b 3 c c . . 
+    . . . . c b b c c c . . . . 
+    `, SpriteKind.Player)
+mySprite.setPosition(71, 55)
+instructions()
+controller.moveSprite(mySprite, 100, 100)
 game.onUpdate(function () {
     scene.setBackgroundImage(assets.image`Background 1`)
     controller.moveSprite(mySprite, controller.dx(100), controller.dy(100))
     controller.moveSprite(mySprite, 0, 0)
+})
+game.onUpdate(function () {
+    tiles.setTilemap(tilemap`level1`)
 })

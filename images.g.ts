@@ -128,21 +128,21 @@ ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 `;
             case "R8[=Pprl3`Tr/!Qz@YDO":
             case "dia background":return img`
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
 `;
         }
         return null;
