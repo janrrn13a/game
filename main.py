@@ -6,19 +6,17 @@ def instructions():
     game.show_long_text("To jump press A", DialogLayout.BOTTOM)
     game.show_long_text("To move left press the left button", DialogLayout.BOTTOM)
     game.show_long_text("To move right press the right button", DialogLayout.BOTTOM)
-    info.set_life(4)
 
 def on_a_pressed():
-    controller.move_sprite(mySprite, 0, controller.dy())
+    mySprite.vy = -75
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 
-def on_left_pressed():
-    controller.move_sprite(mySprite, controller.dx(), 0)
-controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
-
-def on_right_pressed():
-    controller.move_sprite(mySprite, controller.dx(), 0)
-controller.right.on_event(ControllerButtonEvent.PRESSED, on_right_pressed)
+def on_overlap_tile(sprite, location):
+    tiles.place_on_tile(sprite, tiles.get_tile_location(0, 5))
+    info.change_life_by(-1)
+scene.on_overlap_tile(SpriteKind.player,
+    sprites.dungeon.hazard_lava1,
+    on_overlap_tile)
 
 mySprite: Sprite = None
 effects.star_field.start_screen_effect(2000)
@@ -170,7 +168,6 @@ game.show_long_text("Catch the stars to escape the dungeon. ",
     DialogLayout.CENTER)
 game.show_long_text("Watch out for the monsters they can take away your lives if you get hit. ",
     DialogLayout.CENTER)
-info.set_life(4)
 mySprite = sprites.create(img("""
         . . . . . . . . . . . . . . 
             . . . . . f f f f . . . . . 
@@ -190,20 +187,14 @@ mySprite = sprites.create(img("""
             . . . . c b b c c c . . . .
     """),
     SpriteKind.player)
-mySprite.set_position(71, 55)
-instructions()
-controller.move_sprite(mySprite, 100, 100)
-
-def on_on_update():
-    scene.set_background_image(assets.image("""
-        Background 1
-    """))
-    controller.move_sprite(mySprite, controller.dx(100), controller.dy(100))
-    controller.move_sprite(mySprite, 0, 0)
-game.on_update(on_on_update)
-
-def on_on_update2():
-    tiles.set_tilemap(tilemap("""
-        level1
-    """))
-game.on_update(on_on_update2)
+mySprite.set_position(12, 103)
+controller.move_sprite(mySprite, 100, 0)
+info.set_life(4)
+scene.set_background_image(assets.image("""
+    Background 1
+"""))
+tiles.set_tilemap(tilemap("""
+    level0
+"""))
+mySprite.ay = 100
+tiles.place_on_tile(mySprite, tiles.get_tile_location(0, 5))

@@ -1,20 +1,29 @@
+namespace SpriteKind {
+    export const starPoint = SpriteKind.create()
+}
 function instructions () {
     scene.setBackgroundImage(assets.image`dia background`)
     game.showLongText("You start with 4 lives", DialogLayout.Center)
     game.showLongText("To jump press A", DialogLayout.Bottom)
     game.showLongText("To move left press the left button", DialogLayout.Bottom)
     game.showLongText("To move right press the right button", DialogLayout.Bottom)
-    info.setLife(4)
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
+    info.changeScoreBy(1)
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    controller.moveSprite(mySprite, 0, controller.dy())
+    mySprite.vy = -75
 })
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    controller.moveSprite(mySprite, controller.dx(), 0)
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardLava0, function (sprite, location) {
+    tiles.placeOnTile(sprite, tiles.getTileLocation(0, 5))
+    info.changeLifeBy(-1)
+    info.setScore(0)
 })
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    controller.moveSprite(mySprite, controller.dx(), 0)
+sprites.onOverlap(SpriteKind.Player, SpriteKind.starPoint, function (sprite, otherSprite) {
+    star.destroy()
+    info.changeScoreBy(1)
 })
+let star: Sprite = null
 let mySprite: Sprite = null
 effects.starField.startScreenEffect(2000)
 scene.setBackgroundImage(img`
@@ -156,12 +165,6 @@ game.setDialogFrame(img`
     . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . 
     `)
-game.showLongText("Welcome to star escapes", DialogLayout.Center)
-music.playMelody("G E B G B F A E ", 120)
-game.setDialogFrame(assets.image`dia background`)
-game.showLongText("Catch the stars to escape the dungeon. ", DialogLayout.Center)
-game.showLongText("Watch out for the monsters they can take away your lives if you get hit. ", DialogLayout.Center)
-info.setLife(4)
 mySprite = sprites.create(img`
     . . . . . . . . . . . . . . 
     . . . . . f f f f . . . . . 
@@ -180,14 +183,39 @@ mySprite = sprites.create(img`
     . . c c 3 3 b 3 b 3 c c . . 
     . . . . c b b c c c . . . . 
     `, SpriteKind.Player)
-mySprite.setPosition(71, 55)
-instructions()
-controller.moveSprite(mySprite, 100, 100)
-game.onUpdate(function () {
-    scene.setBackgroundImage(assets.image`Background 1`)
-    controller.moveSprite(mySprite, controller.dx(100), controller.dy(100))
-    controller.moveSprite(mySprite, 0, 0)
-})
-game.onUpdate(function () {
-    tiles.setTilemap(tilemap`level1`)
-})
+game.showLongText("Welcome to star escapes", DialogLayout.Center)
+music.playMelody("G E B G B F A E ", 120)
+game.setDialogFrame(assets.image`dia background`)
+game.showLongText("Catch the stars to escape the dungeon. ", DialogLayout.Center)
+game.showLongText("Watch out for the monsters they can take away your lives if you get hit. ", DialogLayout.Center)
+info.setLife(4)
+info.setScore(0)
+scene.setBackgroundImage(assets.image`Background 1`)
+tiles.setTilemap(tilemap`level0`)
+star = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . 5 . . . . . . . . 
+    . . . . . . 5 5 5 . . . . . . . 
+    . . . . . 5 5 5 5 5 . . . . . . 
+    . . . . 5 5 5 5 5 5 5 . . . . . 
+    . . . 5 5 5 5 4 5 5 5 5 . . . . 
+    . . . . 5 5 5 5 5 5 5 . . . . . 
+    . . . . . 5 5 5 5 5 . . . . . . 
+    . . . . . . 5 5 5 . . . . . . . 
+    . . . . . . . 5 . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.starPoint)
+tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
+for (let value of tiles.getTilesByType(assets.tile`myTile0`)) {
+    tiles.setTileAt(value, assets.tile`transparency16`)
+}
+mySprite.setPosition(12, 103)
+mySprite.ay = 100
+tiles.placeOnTile(mySprite, tiles.getTileLocation(0, 5))
+controller.moveSprite(mySprite, 100, 0)
+scene.cameraFollowSprite(mySprite)
