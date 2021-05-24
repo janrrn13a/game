@@ -1,3 +1,211 @@
+@namespace
+class SpriteKind:
+    starPoint = SpriteKind.create()
+def instructions():
+    scene.set_background_image(assets.image("""
+        dia background
+    """))
+    game.show_long_text("You start with 4 lives", DialogLayout.CENTER)
+    game.show_long_text("To jump press A", DialogLayout.BOTTOM)
+    game.show_long_text("To move left press the left button", DialogLayout.BOTTOM)
+    game.show_long_text("To move right press the right button", DialogLayout.BOTTOM)
+
+def on_overlap_tile(sprite, location):
+    info.change_score_by(1)
+scene.on_overlap_tile(SpriteKind.player,
+    assets.tile("""
+        myTile
+    """),
+    on_overlap_tile)
+
+def on_a_pressed():
+    mySprite.vy = -75
+controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
+
+def on_overlap_tile2(sprite, location):
+    tiles.place_on_tile(sprite, tiles.get_tile_location(0, 5))
+    info.change_life_by(-1)
+    info.set_score(0)
+scene.on_overlap_tile(SpriteKind.player,
+    sprites.dungeon.hazard_lava0,
+    on_overlap_tile2)
+
+def on_on_overlap(sprite, otherSprite):
+    star.destroy()
+    info.change_score_by(1)
+sprites.on_overlap(SpriteKind.player, SpriteKind.starPoint, on_on_overlap)
+
+def on_overlap_tile3(sprite, location):
+    tiles.place_on_tile(sprite, tiles.get_tile_location(0, 1))
+    info.change_life_by(-1)
+    info.set_score(0)
+scene.on_overlap_tile(SpriteKind.player,
+    sprites.dungeon.hazard_lava1,
+    on_overlap_tile3)
+
+def on_overlap_tile4(sprite, location):
+    global star
+    scene.set_background_image(img("""
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4ffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffff4fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4fffffffff4fffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5fffffffffffffffffffffffffffffffffffffffffffffffffffffffffaffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffff555ffffffffffafffffffffffffaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffff4fffffffffffffffffffffffffffffffffffffffffffffffffffffffff55555ffffffffffffffffffffffaaafffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff555ffffffffffffffffffffffaaaaaffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffffffffffffff5f5fffffffffffffffffffffffaaafffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffafafffffffffff8fffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffff8fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffff8fffffffffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4fffffff
+                fffffffffffffffffffffffffffffff888ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffff88888ffffffffffffffffffffffffffffffffffffffffffffffffffffff8fffffffffffffffffffffffffffff5fffffffffffffffffffaffffffffffffffffffff
+                fffffffffffffafffffffffffffffff888fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffaffffffffffffffffffffffff555ffffffffff4ffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffff8f8fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff55555ffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8fffffffffffff555fffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffffffffffffffffffffffffff5f5fffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffff8ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8fffffffffffffffffffffffffffffffffffff8ffffffffffffffffffffffff4ffffffff
+                ffffffff5fffffffffffffff8fffffffffffffffffffffffffffffffffff4fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffff5fffffffffffffffffffaffffffffffffffffffffffffffffff444ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffff55555fffffffffffffffffffffffffffffffffffffffffffffff44444fffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffff5ffffffffffffffffffffffffffffffffffffffffffffffffff444fffffffffffffffffafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4ffffffffffffffffff
+                ffffffff5fffffffffffffffffffffffffffffffffffffffff4ffffffff4f4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4ffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffff4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffaaaffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4ffffffffffaaaaafffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffcfffffffffffffffffffffffffffffffffffffffffffffaaaffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffafaffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffafffffffffffffffff8fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8fffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffaffffffffffffffffffffffffffffffffff4fffffffffffffff8ffffffffffffffffffffff
+                fffffffffafffffffffffffffffffffffffffffffffffffffffafffffffffffffffffff8ffffffffffffaaaaafffffffffffffffffffffffffffffff444fffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffff5fffffffffffffffffffffffffffaaafffffffffffffffffffffffffffffffffaffffffffffafffffffffffffffffffff44444ffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffff555fffffffffffffffffffffffffaaaaaffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffff444fffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffff55555fffffffffffffffffffffffffaaafffffffffffffffffffffffffffffffffffffffffffffffffff8fffffffffffffff4f4fffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffff555ffffffffffffffffffffffffffafaffffffffffffffffffffffffffffffffffffffffffffffffffffffffaffffffffffffffffffffffffffffffffffffffff4fffffffff
+                fffffffffffffffffffff5f5ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4ffffffffffaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffff4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffafffffffffffffffcfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4fffffffffffffffaafffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffaffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffff4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffff4ffffffffffffaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffafffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffff4ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                fffffffffffffffffffffffffff8ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffff88ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffff4fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    """))
+    tiles.set_tilemap(tilemap("""
+        level4
+    """))
+    star = sprites.create(img("""
+            . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . 5 . . . . . . . . 
+                    . . . . . . 5 5 5 . . . . . . . 
+                    . . . . . 5 5 5 5 5 . . . . . . 
+                    . . . . 5 5 5 5 5 5 5 . . . . . 
+                    . . . 5 5 5 5 4 5 5 5 5 . . . . 
+                    . . . . 5 5 5 5 5 5 5 . . . . . 
+                    . . . . . 5 5 5 5 5 . . . . . . 
+                    . . . . . . 5 5 5 . . . . . . . 
+                    . . . . . . . 5 . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . .
+        """),
+        SpriteKind.starPoint)
+    tiles.place_on_random_tile(star, assets.tile("""
+        myTile0
+    """))
+    tiles.place_on_tile(sprite, tiles.get_tile_location(0, 1))
+    for value in tiles.get_tiles_by_type(assets.tile("""
+        myTile0
+    """)):
+        tiles.set_tile_at(value, assets.tile("""
+            transparency16
+        """))
+scene.on_overlap_tile(SpriteKind.player,
+    assets.tile("""
+        tile13
+    """),
+    on_overlap_tile4)
+
+star: Sprite = None
 mySprite: Sprite = None
 effects.star_field.start_screen_effect(2000)
 scene.set_background_image(img("""
@@ -139,28 +347,72 @@ game.set_dialog_frame(img("""
         . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . .
 """))
-for index in range(2):
-    music.play_melody("G E B G B F A E ", 120)
-game.show_long_text("Welcome to star escapes", DialogLayout.LEFT)
-for index2 in range(2):
-    music.play_melody("G E B G B F A E ", 120)
-    mySprite = sprites.create(img("""
-            . . . . . . . . . . . . . . 
-                    . . . . . f f f f . . . . . 
-                    . . . f f 5 5 5 5 f f . . . 
-                    . . f 5 5 5 5 5 5 5 5 f . . 
-                    . f 5 5 5 5 5 5 5 5 5 5 f . 
-                    c b 5 5 5 d b b d 5 5 5 b c 
-                    f 5 5 5 b 4 4 4 4 b 5 5 5 f 
-                    f 5 5 c c 4 4 4 4 c c 5 5 f 
-                    f b b f b f 4 4 f b f b b f 
-                    f b b e 1 f d d f 1 e b b f 
-                    c f b f d d d d d 4 4 b f c 
-                    . c e c 6 9 9 9 4 d d d c . 
-                    . e 4 c 9 9 9 9 4 d d 4 c . 
-                    . e c b b 3 b b b e e c . . 
-                    . . c c 3 3 b 3 b 3 c c . . 
-                    . . . . c b b c c c . . . .
-        """),
-        SpriteKind.player)
-    mySprite.set_position(76, 84)
+mySprite = sprites.create(img("""
+        . . . . . . . . . . . . . . 
+            . . . . . f f f f . . . . . 
+            . . . f f 5 5 5 5 f f . . . 
+            . . f 5 5 5 5 5 5 5 5 f . . 
+            . f 5 5 5 5 5 5 5 5 5 5 f . 
+            c b 5 5 5 d b b d 5 5 5 b c 
+            f 5 5 5 b 4 4 4 4 b 5 5 5 f 
+            f 5 5 c c 4 4 4 4 c c 5 5 f 
+            f b b f b f 4 4 f b f b b f 
+            f b b e 1 f d d f 1 e b b f 
+            c f b f d d d d d 4 4 b f c 
+            . c e c 6 9 9 9 4 d d d c . 
+            . e 4 c 9 9 9 9 4 d d 4 c . 
+            . e c b b 3 b b b e e c . . 
+            . . c c 3 3 b 3 b 3 c c . . 
+            . . . . c b b c c c . . . .
+    """),
+    SpriteKind.player)
+game.show_long_text("Welcome to star escapes", DialogLayout.CENTER)
+music.play_melody("G E B G B F A E ", 120)
+game.set_dialog_frame(assets.image("""
+    dia background
+"""))
+game.show_long_text("Catch the stars to escape the dungeon. ",
+    DialogLayout.CENTER)
+game.show_long_text("Watch out for the monsters they can take away your lives if you get hit. ",
+    DialogLayout.CENTER)
+info.set_life(4)
+info.set_score(0)
+star = sprites.create(img("""
+        . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . 5 . . . . . . . . 
+            . . . . . . 5 5 5 . . . . . . . 
+            . . . . . 5 5 5 5 5 . . . . . . 
+            . . . . 5 5 5 5 5 5 5 . . . . . 
+            . . . 5 5 5 5 4 5 5 5 5 . . . . 
+            . . . . 5 5 5 5 5 5 5 . . . . . 
+            . . . . . 5 5 5 5 5 . . . . . . 
+            . . . . . . 5 5 5 . . . . . . . 
+            . . . . . . . 5 . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . .
+    """),
+    SpriteKind.starPoint)
+tiles.place_on_random_tile(star, assets.tile("""
+    myTile0
+"""))
+scene.set_background_image(assets.image("""
+    Background 1
+"""))
+tiles.set_tilemap(tilemap("""
+    level0
+"""))
+mySprite.set_position(12, 103)
+mySprite.ay = 100
+tiles.place_on_tile(mySprite, tiles.get_tile_location(0, 5))
+controller.move_sprite(mySprite, 100, 0)
+scene.camera_follow_sprite(mySprite)
+for value2 in tiles.get_tiles_by_type(assets.tile("""
+    myTile0
+""")):
+    tiles.set_tile_at(value2, assets.tile("""
+        transparency16
+    """))
