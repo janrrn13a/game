@@ -1,5 +1,5 @@
 {
-    "name": "game",
+    "name": "Star escapes",
     "description": "",
     "dependencies": {
         "device": "*"
